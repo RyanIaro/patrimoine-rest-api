@@ -27,7 +27,7 @@ public class PatrimoineService {
         }
     }
 
-    public void PatrimoineService() {
+    public PatrimoineService() {
         objectMapper.findAndRegisterModules();
         createStorageDirectoryIfNotExists();
     }
