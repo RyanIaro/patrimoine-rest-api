@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class patrimoineService {
+public class PatrimoineService {
     private static final String STORAGE_DIRECTORY = "patrimoines";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
