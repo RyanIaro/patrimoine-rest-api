@@ -1,6 +1,8 @@
 package com.rattrapage.patrimoine.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rattrapage.patrimoine.exceptions.PatrimoineNotFoundException;
+import com.rattrapage.patrimoine.exceptions.PatrimoineStorageException;
 import com.rattrapage.patrimoine.model.Patrimoine;
 import org.springframework.stereotype.Service;
 
@@ -42,11 +44,11 @@ public class PatrimoineService {
             }
             return patrimoine;
         } catch (IOException e) {
-            throw new RuntimeException("Erreur lors de la sauvegarde du patrimoine", e);
+            throw new PatrimoineStorageException("Erreur lors de la sauvegarde du patrimoine avec l'id : " + patrimoine.getId(), e);
         }
     }
 
-    public Optional<Patrimoine> get(String id) {
+    public Patrimoine get(String id) {
         File file = new File(STORAGE_DIRECTORY, id + ".json");
         if (file.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -55,12 +57,12 @@ public class PatrimoineService {
                 while ((line = reader.readLine()) != null) {
                     content.append(line);
                 }
-                return Optional.of(objectMapper.readValue(content.toString(), Patrimoine.class));
+                return objectMapper.readValue(content.toString(), Patrimoine.class);
             } catch (IOException e) {
-                throw new RuntimeException("Erreur lors de la lecture du patrimoine", e);
+                throw new PatrimoineStorageException("Erreur lors de la lecture du patrimoine avec l'id : " + id, e);
             }
         }
-        return Optional.empty();
+        throw new PatrimoineNotFoundException(id);
     }
 
 }
