@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rattrapage.patrimoine.exceptions.PatrimoineNotFoundException;
 import com.rattrapage.patrimoine.exceptions.PatrimoineStorageException;
 import com.rattrapage.patrimoine.model.Patrimoine;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -13,9 +15,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
+@Getter
+@Setter
 public class PatrimoineService {
     private static final String STORAGE_DIRECTORY = "patrimoines";
     private final ObjectMapper objectMapper = new ObjectMapper();
